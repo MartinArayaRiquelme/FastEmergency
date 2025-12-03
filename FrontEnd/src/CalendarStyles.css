@@ -1,0 +1,58 @@
+/* EL CONTENEDOR DEL CALENDARIO */
+.react-calendar {
+  width: 100%;
+  background: white;
+  border: 3px solid #222f3e;
+  font-family: 'Archivo', sans-serif;
+  box-shadow: 6px 6px 0px 0px #222f3e; /* Sombra dura */
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* NAVEGACIÓN (Mes anterior/siguiente) */
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: #feca57; /* Amarillo */
+  border: 2px solid #222f3e;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 2px;
+  cursor: pointer;
+}
+
+/* LOS DÍAS DE LA SEMANA (Lun, Mar...) */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 0.8rem;
+  color: #ff6b6b; /* Rojo */
+}
+
+/* LOS BOTONES DE LOS DÍAS (1, 2, 3...) */
+.react-calendar__tile {
+  background: white;
+  border: 1px solid #ddd;
+  height: 50px;
+  font-weight: bold;
+  color: #222f3e;
+  transition: all 0.1s;
+}
+
+.react-calendar__tile:hover {
+  background: #e5e7eb;
+}
+
+/* DÍA SELECCIONADO */
+.react-calendar__tile--active {
+  background: #222f3e !important;
+  color: white !important;
+  border: 2px solid black !important;
+}
+
+/* DÍA ACTUAL (HOY) */
+.react-calendar__tile--now {
+  background: #f1f2f6;
+  border: 2px solid #ff6b6b;
+  color: #ff6b6b;
+}

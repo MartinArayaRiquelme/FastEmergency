@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap');
+
+:root {
+  /* Paleta "Emergencia Moderna" */
+  --primary: #ff6b6b; /* Rojo coral vibrante */
+  --accent: #feca57;  /* Amarillo alerta */
+  --dark: #222f3e;    /* Casi negro */
+  --light: #ffffff;   /* Blanco puro */
+  
+  /* El secreto del estilo: Bordes y Sombras Duras */
+  --border-thick: 3px solid var(--dark);
+  --shadow-hard: 5px 5px 0px 0px var(--dark);
+}
+
+body {
+  margin: 0;
+  font-family: 'Archivo', sans-serif; /* Fuente gruesa y legible */
+  background-color: #f7f1e3; /* Un beige muy suave de fondo */
+  color: var(--dark);
+}
+
+a { text-decoration: none; color: inherit; }
+* { box-sizing: border-box; }
