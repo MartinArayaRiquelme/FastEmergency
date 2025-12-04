@@ -24,23 +24,33 @@ function PostulacionForm() {
   const actividades = ["Remoción de Escombros", "Acopio y Logística", "Primeros Auxilios", "Cocina Solidaria"];
   const horarios = ["09:00 - 13:00 (Mañana)", "14:00 - 18:00 (Tarde)", "19:00 - 23:00 (Noche)"];
 
-  // 1. CARGAR DATOS
+  // 1. CARGAR DATOS (CON EL PASE VIP DE NGROK)
   useEffect(() => {
     const inicializar = async () => {
       const usuarioData = JSON.parse(localStorage.getItem('usuarioLogueado'));
       
       try {
-        const resAlb = await fetch('http://localhost:3000/api/albergues/estado');
+        // 👇 AQUÍ AGREGAMOS EL HEADER PARA EVITAR EL ERROR DE SYNTAX
+        const resAlb = await fetch('https://leila-unpaced-exaltedly.ngrok-free.dev/api/albergues/estado', {
+            headers: {
+                "ngrok-skip-browser-warning": "true"
+            }
+        });
         const dataAlb = await resAlb.json();
         setAlbergues(dataAlb);
-      } catch (e) { console.error(e); }
+      } catch (e) { console.error("Error cargando albergues:", e); }
 
       if (usuarioData && usuarioData._id) {
         try {
-          const resHist = await fetch(`http://localhost:3000/api/postulaciones/${usuarioData._id}`);
+          // 👇 AQUÍ TAMBIÉN AGREGAMOS EL HEADER
+          const resHist = await fetch(`https://leila-unpaced-exaltedly.ngrok-free.dev/api/postulaciones/${usuarioData._id}`, {
+              headers: {
+                  "ngrok-skip-browser-warning": "true"
+              }
+          });
           const dataHist = await resHist.json();
           setHistorialPrevio(dataHist); 
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error("Error cargando historial:", e); }
       }
     };
     inicializar();
@@ -133,10 +143,11 @@ function PostulacionForm() {
       // -------------------------------------
 
       try {
-        const response = await fetch('http://localhost:3000/api/postulaciones', {
+        const response = await fetch('https://leila-unpaced-exaltedly.ngrok-free.dev/api/postulaciones', {
             method: 'POST',
-            // NOTA: NO agregamos 'Content-Type': 'application/json'
-            // El navegador detecta que es FormData y pone el 'multipart/form-data' solo.
+            // NOTA: Para POST no suele ser necesario el header de skip-warning, 
+            // pero si falla, puedes agregarlo aquí también.
+            // body se encarga del multipart automáticamente
             body: formData 
         });
 

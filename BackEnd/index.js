@@ -1,47 +1,40 @@
-import usuarioRoutes from './routes/usuarioRoutes.js';
-import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config(); // Carga las variables de entorno
+import express from 'express';
+
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// --- IMPORTACIÓN DE RUTAS ---
+// Nota: En modo "Module", a veces es obligatorio poner la extensión .js al final
+import usuarioRoutes from './routes/usuarioRoutes.js';
+import albergueRoutes from './routes/albergueRoutes.js';
 import postulacionRoutes from './routes/postulacionRoutes.js';
-import albergueRoutes from './routes/albergueRoutes.js'
-
-// Configuración
-dotenv.config();
+// --- CONFIGURACIÓN DE __DIRNAME (No existe nativamente en Modules) ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
+// --- MIDDLEWARES ---
 app.use(cors());
+app.use(express.json());
+// --- 📂 CARPETA PÚBLICA DE FOTOS ---
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// --- ZONA DE PRUEBAS ---
-console.log('--- INTENTANDO CONECTAR ---');
-console.log('1. Leyendo archivo .env...');
-console.log('2. La URI es:', process.env.MONGO_URI); // ¿Esto imprime la dirección o undefined?
+// --- CONEXIÓN A MONGODB ---
+const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/fastEmergencyDB';
 
-const connectDB = async () => {
-  try {
-    // Forzamos que use IPv4 (127.0.0.1) por si tu PC prefiere IPv6
-    await mongoose.connect(process.env.MONGO_URI, {
-      family: 4 
-    });
-    console.log('✅ ¡EXITO! Conectado a la Base de Datos');
-  } catch (error) {
-    console.error('❌ ERROR FATAL:', error.message);
-  }
-};
-
-connectDB();
-// -----------------------
-
-app.get('/', (req, res) => {
-  res.send('API Funcionando');
-});
+mongoose.connect(mongoUri)
+    .then(() => console.log('✅ Conectado exitosamente a MongoDB'))
+    .catch((err) => console.error('❌ Error fatal conectando a MongoDB:', err));
 
 app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/postulaciones', postulacionRoutes);
 app.use('/api/albergues', albergueRoutes);
-
+app.use('/api/postulaciones', postulacionRoutes);
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
+    console.log(`🚀 Servidor backend corriendo en el puerto ${PORT}`);
+    console.log(`📂 Carpeta de fotos pública en: http://localhost:${PORT}/uploads`);
 });

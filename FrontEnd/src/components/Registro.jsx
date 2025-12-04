@@ -13,6 +13,7 @@ function Registro() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,7 +26,8 @@ function Registro() {
     // ------------------------
 
     try {
-      const response = await fetch('http://localhost:3000/api/usuarios', {
+      // 👇 URL CORREGIDA Y LIMPIA
+      const response = await fetch('https://leila-unpaced-exaltedly.ngrok-free.dev/api/usuarios', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -33,7 +35,8 @@ function Registro() {
 
       if (response.ok) {
         alert('✅ ¡BIENVENIDO AL EQUIPO!');
-        // Opcional: Limpiar el formulario aquí
+        // Opcional: Limpiar el formulario o redirigir al login
+        // window.location.href = '/login'; 
       } else {
         alert('❌ ERROR: Ese correo ya está registrado o hay un problema');
       }
@@ -41,7 +44,7 @@ function Registro() {
       console.error(error);
       alert('Error de conexión con el servidor');
     }
-};
+  };
 
   // Estilos para los Inputs (Campos de texto)
   const labelStyle = {

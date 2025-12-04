@@ -13,11 +13,15 @@ function Buzon() {
       if (!usuario) { navigate('/'); return; }
 
       try {
-        const response = await fetch(`http://localhost:3000/api/postulaciones/${usuario._id}`);
+        // 👇 AGREGAMOS EL HEADER PARA QUE NGROK NO LO BLOQUEE
+        const response = await fetch(`https://leila-unpaced-exaltedly.ngrok-free.dev/api/postulaciones/${usuario._id}`, {
+            headers: {
+                "ngrok-skip-browser-warning": "true"
+            }
+        });
         const data = await response.json();
 
-        // FILTRO: Mostramos lo que ya no está en proceso (ni pendiente ni en revisión)
-        // O sea: confirmada, rechazada u observada
+        // FILTRO: Mostramos lo que ya no está en proceso
         const respuestas = data.filter(p => 
             p.estado !== 'pendiente' && p.estado !== 'en_revision_albergue'
         );
@@ -48,20 +52,17 @@ function Buzon() {
         ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {mensajes.map(msg => {
-                    // AQUÍ ESTABA EL ERROR: Ahora validamos con 'confirmada'
-                    const esExito = msg.estado === 'confirmada';
+                    const esExito = msg.estado === 'confirmada' || msg.estado === 'aprobado'; // A veces se guarda como aprobado
 
                     return (
                         <div key={msg._id} style={{
                             border: '3px solid #222f3e',
                             borderRadius: '10px',
                             padding: '20px',
-                            // Verde si es confirmada, Rojo si no
                             background: esExito ? '#ecfdf5' : '#fef2f2',
                             boxShadow: '8px 8px 0px 0px #222f3e',
                             position: 'relative'
                         }}>
-                            {/* ETIQUETA SUPERIOR */}
                             <div style={{
                                 position: 'absolute', top: '-15px', right: '20px',
                                 background: esExito ? '#059669' : '#dc2626',

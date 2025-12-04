@@ -6,7 +6,7 @@ const router = express.Router();
 
 // ==========================================
 // 1. SEED DE USUARIOS (CREACIÓN AUTOMÁTICA)
-// POST http://localhost:3000/api/usuarios/seed
+// POST http://https://leila-unpaced-exaltedly.https://leila-unpaced-exaltedly.ngrok-free.dev/-free.dev//api/usuarios/seed
 // ==========================================
 router.post('/seed', async (req, res) => {
   try {
@@ -65,7 +65,7 @@ router.post('/seed', async (req, res) => {
 
 // ==========================================
 // 2. REGISTRO DE USUARIO NUEVO
-// POST http://localhost:3000/api/usuarios
+// POST http://https://leila-unpaced-exaltedly.https://leila-unpaced-exaltedly.ngrok-free.dev/-free.dev//api/usuarios
 // ==========================================
 router.post('/', async (req, res) => {
   try {
@@ -95,7 +95,7 @@ router.post('/', async (req, res) => {
 
 // ==========================================
 // 3. INICIO DE SESIÓN (LOGIN)
-// POST http://localhost:3000/api/usuarios/login
+// POST http://https://leila-unpaced-exaltedly.https://leila-unpaced-exaltedly.ngrok-free.dev/-free.dev//api/usuarios/login
 // ==========================================
 router.post('/login', async (req, res) => {
   try {
