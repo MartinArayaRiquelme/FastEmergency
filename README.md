@@ -51,5 +51,5 @@ se descargó en un sistema operativo diferente):
 3. Vuelva a intentar 'npm run dev'.
 
 ============================================================
-Autor: [Tu Nombre Aquí]
+Autor: Martin Araya - Francisco Villagran - Romina Mondaca
 ============================================================
